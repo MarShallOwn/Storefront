@@ -7,8 +7,13 @@ const store = new UserStore();
 
 // get the list of all users
 const index = async (_req: Request, res: Response) => {
-  const users: User[] | undefined = await store.index();
-  return res.status(200).json({ users });
+  try {
+    const users: User[] | undefined = await store.index();
+    return res.status(200).json({ users });
+  } catch (err) {
+    return res.status(400).json({ err: `${err}` });
+  }
+
 };
 
 // create user handler and generate jwt token and return that token
@@ -49,7 +54,7 @@ const show = async (req: Request, res: Response) => {
     const user = await store.show(username);
     res.json(user);
   } catch (err) {
-    return res.status(400).json({ err });
+    return res.status(400).json({ err: `${err}` });
   }
 };
 

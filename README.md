@@ -23,6 +23,10 @@ This application is not a full online store application and may contain bugs and
 * **`bcrypt:`** to hash password so when we store the password in the database it doesn't get stored as plain text and provide compare function.
 
 ---
+## Ports
+* application server running on port **`3000`**
+* database server running on port **`5432`**
+---
 
 ## Env Attributes
 * **`PORT`** = 3000
@@ -49,6 +53,14 @@ You will need the following things properly installed on your computer.
 ---
 
 ## Installation
+### Database Installation
+* `open terminal`
+* `write down in the terminal 'psql -U (username)' and then enter the password`
+* `to create the database what you gonna do is write 'CREATE DATABASE e_shop_udacity;'`
+* `dont need to create 'e_shop_udacity_test' because the script automatically creates and deletes the test database before and after test`
+* `we now done with the Database Installation, Now we will then proceed to the `[Application Installation](#application-installation)
+
+### Application Installation
 * `git clone https://github.com/MarShallOwn/Storefront.git`
 * `enter the folder`
 * `open terminal`

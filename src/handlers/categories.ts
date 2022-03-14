@@ -4,9 +4,12 @@ import CategoryStore, { Category } from "../models/category";
 const store = new CategoryStore();
 
 const index = async (_req: Request, res: Response) => {
-  const categories = await store.index();
-
-  res.json(categories);
+  try {
+    const categories = await store.index();
+    return res.status(200).json(categories);
+  } catch (err) {
+    return res.status(400).json({ err: `${err}` });
+  }
 };
 
 const show = async (req: Request, res: Response) => {
@@ -14,31 +17,34 @@ const show = async (req: Request, res: Response) => {
 
   try {
     const category = await store.show(categoryId);
-    res.json(category);
+    return res.status(200).json(category);
   } catch (err) {
-    return res.status(400).json({ err });
+    return res.status(400).json({ err: `${err}` });
   }
 };
 
 const create = async (req: Request, res: Response) => {
-
-  if(!req.body.hasOwnProperty("category")) {
-    return res.status(400).json({err: "category object missing"})
+  if (!req.body.hasOwnProperty("category")) {
+    return res.status(400).json({ err: "category object missing" });
   }
 
   const { name } = req.body.category;
 
-  if(!name) {
-    return res.status(400).json({err: "missing categories fields"})
+  if (!name) {
+    return res.status(400).json({ err: "missing categories fields" });
   }
 
   const category: Category = {
     name,
   };
 
-  const newCategory = await store.create(category);
+  try {
+    const newCategory = await store.create(category);
 
-  return res.status(201).json(newCategory);
+    return res.status(201).json(newCategory);
+  } catch (err) {
+    return res.status(400).json({ err: `${err}` });
+  }
 };
 
 const deleteCategory = async (req: Request, res: Response) => {
@@ -48,7 +54,7 @@ const deleteCategory = async (req: Request, res: Response) => {
     const category = await store.delete(categoryId);
     res.json(category);
   } catch (err) {
-    return res.status(400).json({ err });
+    return res.status(400).json({ err: `${err}` });
   }
 };
 

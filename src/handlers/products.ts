@@ -5,9 +5,13 @@ import verifyAuthToken from "../middlewares/verifyAuthToken";
 const store = new ProductStore();
 
 const index = async (_req: Request, res: Response) => {
-  const products = await store.index();
+  try {
+    const products = await store.index();
 
-  return res.json(products);
+    return res.status(200).json(products);
+  } catch (err) {
+    return res.status(400).json({ err: `${err}` });
+  }
 };
 
 const show = async (req: Request, res: Response) => {
@@ -17,20 +21,19 @@ const show = async (req: Request, res: Response) => {
     const product = await store.show(productId);
     return res.json(product);
   } catch (err) {
-    return res.status(400).json({ err });
+    return res.status(400).json({ err: `${err}` });
   }
 };
 
 const create = async (req: Request, res: Response) => {
-
-  if(!req.body.hasOwnProperty("product")) {
-    return res.status(400).json({err: "product object missing"})
+  if (!req.body.hasOwnProperty("product")) {
+    return res.status(400).json({ err: "product object missing" });
   }
 
   const { name, price, categoryId } = req.body.product;
 
-  if(!name || !price || !categoryId) {
-    return res.status(400).json({err: "missing product fields"})
+  if (!name || !price || !categoryId) {
+    return res.status(400).json({ err: "missing product fields" });
   }
 
   const product: Product = {
@@ -39,9 +42,14 @@ const create = async (req: Request, res: Response) => {
     categoryId,
   };
 
-  const newProduct = await store.create(product);
+  try {
+    const newProduct = await store.create(product);
 
-  return res.status(201).json(newProduct);
+    return res.status(201).json(newProduct);
+  } catch(err) {
+    return res.status(400).json({ err: `${err}` });
+  }
+
 };
 
 const deleteProduct = async (req: Request, res: Response) => {
@@ -50,7 +58,7 @@ const deleteProduct = async (req: Request, res: Response) => {
     const product = await store.delete(productId);
     return res.json(product);
   } catch (err) {
-    return res.status(400).json({ err });
+    return res.status(400).json({ err: `${err}` });
   }
 };
 
@@ -59,7 +67,7 @@ const getTop5PopularProducts = async (_req: Request, res: Response) => {
     const products = await store.getTop5PopularProducts();
     return res.json(products);
   } catch (err) {
-    return res.status(400).json({ err });
+    return res.status(400).json({ err: `${err}` });
   }
 };
 
@@ -70,7 +78,7 @@ const getProductsByCategory = async (req: Request, res: Response) => {
     const products = await store.getProductsByCategory(categoryName);
     return res.json(products);
   } catch (err) {
-    return res.status(400).json({ err });
+    return res.status(400).json({ err: `${err}` });
   }
 };
 
