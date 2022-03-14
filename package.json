@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "npm run build && node dist/server.ts",
+    "start": "npm run build && node dist/server.js",
     "dev": "nodemon src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:db:setup": "db-migrate db:create e_shop_udacity_test",
+    "test:db:migrate": "SET ENV=test&& db-migrate --env test up",
+    "test:db:drop": "db-migrate db:drop e_shop_udacity_test",
+    "test": "npm run test:db:setup && npm run test:db:migrate && npm run build && SET ENV=test&& jasmine && npm run test:db:drop"
   },
   "author": "MarShallOwn",
   "license": "ISC",
@@ -27,9 +30,11 @@
     "@types/jasmine": "^3.10.3",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/pg": "^8.6.4",
+    "@types/supertest": "^2.0.11",
     "jasmine": "^4.0.2",
     "jasmine-spec-reporter": "^7.0.0",
     "nodemon": "^2.0.15",
+    "supertest": "^6.2.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.2"
   }
