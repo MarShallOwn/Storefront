@@ -191,30 +191,30 @@ Request Body Structure
 ## Data Shapes
 
 #### Users
-- id (SERIAL - PRIMARY KEY)
-- firstName (VARCHAR(150))
-- lastName (VARCHAR(150))
-- username (VARCHAR(150) - UNIQUE)
-- email (VARCHAR(255))
-- password (VARCHAR(100))
+- `id` (SERIAL - PRIMARY KEY)
+- `firstName` (VARCHAR(150))
+- `lastName` (VARCHAR(150))
+- `username` (VARCHAR(150) - UNIQUE)
+- `email` (VARCHAR(255))
+- `password` (VARCHAR(100))
 
 #### Categories
-- id (SERIAL - PRIMARY KEY)
-- name (VARCHAR(60))
+- `id` (SERIAL - PRIMARY KEY)
+- `name` (VARCHAR(60))
 
 #### Products
-- id (SERIAL - PRIMARY KEY)
-- name (VARCHAR(64) NOT NULL)
-- price (integer NOT NULL)
-- category_id (REFERENCE categories.id)
+- `id` (SERIAL - PRIMARY KEY)
+- `name` (VARCHAR(64) NOT NULL)
+- `price` (integer NOT NULL)
+- `category_id` (REFERENCE categories.id)
 
 #### Orders
-- id (SERIAL - PRIMARY KEY)
-- status (VARCHAR(15)) ('active' OR 'completed') 
-- user_id (REFERENCE users.id)
+- `id` (SERIAL - PRIMARY KEY)
+- `status` (VARCHAR(15)) ('active' OR 'completed') 
+- `user_id` (REFERENCE users.id)
 
 #### Order_Products
-- id (SERIAL - PRIMARY KEY)
-- quantity (integer)
-- order_id (REFERENCE orders.id)
-- product_id (REFERENCE products.id)
+- `id` (SERIAL - PRIMARY KEY)
+- `quantity` (integer)
+- `order_id` (REFERENCE orders.id)
+- `product_id` (REFERENCE products.id)
